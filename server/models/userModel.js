@@ -33,6 +33,8 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0
   }
+}, {
+    timestamps: true
 })
 
 const userModel = mongoose.models.Users || mongoose.model('Users', userSchema, 'Users'); // Use the existing Users model if it’s already defined.
