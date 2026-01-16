@@ -7,6 +7,7 @@ import connectDb from './config/connectDb.js';
 const app = express();
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 connectDb();
 
 app.use(express.json());
@@ -20,6 +21,7 @@ app.get('/', (req, res)=> {
     res.send('API is working');
 })
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on port: ${PORT}`)
