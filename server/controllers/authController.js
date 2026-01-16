@@ -49,7 +49,7 @@ export const register = async (req, res) => {
     return res.json({success: true})
   } catch (err) {
     console.log("Error registering user: ", err);
-    return res.json({ success: false, message: err.message });
+    res.json({ success: false, message: err.message });
   }
 };
 
@@ -87,7 +87,7 @@ export const login = async (req, res) => {
 
   } catch (err) {
     console.log("Error logging user: ", err);
-    return res.json({ success: false, message: err.message });
+    res.json({ success: false, message: err.message });
   }
 };
 
@@ -100,7 +100,7 @@ export const logout = async (req, res) => {
       })
       return res.json({success: true, message: 'Logged out' })
    }catch(err){
-      return res.json({success: false, message: err.message })
+      res.json({success: false, message: err.message })
    }
 }
 
@@ -134,10 +134,11 @@ export const sendVerifyOtp = async(req, res) =>{
     return res.json({success: true, message: 'Verfication otp sent on Email'});
 
   }catch(err){
-    return res.json({success: false, message: err.message});
+    res.json({success: false, message: err.message});
   }
 }
 
+//Verify Email using otp
 export const verifyEmail = async(req, res) => {
   const userId = req.user.id;
   const { otp } = req.body;
@@ -168,6 +169,15 @@ export const verifyEmail = async(req, res) => {
     return res.json({success: true, message: 'Email verified successfully'});
 
   }catch(err){
-    return res.json({success: false, message: err.message});
+    res.json({success: false, message: err.message});
+  }
+}
+
+//Check if User is authenticated
+export const isAuthenticated = async (req, res) => {
+  try{
+    return res.json({success: true})
+  }catch(err){
+    res.josn({success: false, message: err.message});
   }
 }
