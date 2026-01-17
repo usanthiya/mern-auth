@@ -10,9 +10,12 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 connectDb();
 
+const allowedOrigin = ['http://localhost:5173'];
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
+    origin: allowedOrigin,
     credentials: true
 }))
 
