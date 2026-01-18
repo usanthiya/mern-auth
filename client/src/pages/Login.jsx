@@ -19,7 +19,7 @@ const Login = () => {
     try{
       e.preventDefault();
       
-      axios.defaults.withCredentials = true;
+      axios.defaults.withCredentials = true; //Add cookies in request
 
       if(state == 'Sign Up'){
         const { data } = await axios.post(`${backendUrl}/api/auth/register`, {name, email, password})

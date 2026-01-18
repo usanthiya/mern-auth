@@ -26,9 +26,10 @@ export const AppContextProvider = (props) => {
       if (data.success) {
         setIsLoggedin(true);
         getUserData();
-      } else {
-        toast.error(data.message);
-      }
+      } 
+      // else {
+      //   toast.error(data.message);
+      // }
     } catch (err) {
       toast.error(err.message);
     }

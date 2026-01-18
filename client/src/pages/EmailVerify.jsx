@@ -1,10 +1,14 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
+import { toast } from 'react-toastify';
 
 const EmailVerify = () => {
   const navigate = useNavigate();
   const inputRefs = useRef([]);
+  const { backendUrl, getUserData } = useContext(AppContext);
 
   const handleInput = (e, index) => {
     // Check if a value is entered and ensure it's not the last input box
@@ -36,6 +40,25 @@ const EmailVerify = () => {
 
   };
 
+  const onSubmitHandler = async(e) =>{
+    e.preventDefault();
+    try{
+      const otpArray = inputRefs.current.map(e=> e.value);
+      const otp = otpArray.join('');
+
+      const { data } = await axios.post(`${backendUrl}/api/auth/verify-account`, {otp});
+      if(data.success){
+        toast.success(data.message);
+        getUserData();
+        navigate('/');
+      }else{
+        toast.error(data.message);
+      }
+    }catch(err){
+       toast.error(err.message);
+    }
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400">
       <img
@@ -44,7 +67,7 @@ const EmailVerify = () => {
         className="h-10 absolute left-5 top-5 sm:left-20 cursor-pointer"
         onClick={() => navigate("/")}
       />
-      <form className="bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-indigo-300 text-sm">
+      <form onSubmit={onSubmitHandler} className="bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96 text-indigo-300 text-sm">
         <h1 className="text-2xl font-semibold text-white text-center mb-4">
           Email Verify OTP
         </h1>
