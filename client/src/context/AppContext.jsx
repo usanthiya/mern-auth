@@ -6,6 +6,16 @@ import { useEffect } from "react";
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
+  /**
+    * Tells Axios to:
+      Send cookies with every HTTP request
+      Accept cookies from the backend
+      Work across CORS (cross-origin requests)
+
+      Without this, cookies are ignored by the browser
+  */
+  axios.defaults.withCredentials = true;
+
   let backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState();
