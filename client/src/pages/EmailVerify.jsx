@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import axios from "axios";
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 const EmailVerify = () => {
   const navigate = useNavigate();
   const inputRefs = useRef([]);
-  const { backendUrl, getUserData } = useContext(AppContext);
+  const { backendUrl, getUserData, isLoggedin, userData } = useContext(AppContext);
 
   const handleInput = (e, index) => {
     // Check if a value is entered and ensure it's not the last input box
@@ -58,6 +58,13 @@ const EmailVerify = () => {
        toast.error(err.message);
     }
   }
+  
+  // Prevent verified users from accessing '/email-verify' and redirect to Home
+  useEffect(()=> {
+    if(isLoggedin && userData && userData.isAccountVerified){
+      navigate('/');
+    }
+  }, [isLoggedin, userData])
 
   return (
     <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400">
