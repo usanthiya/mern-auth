@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transporter from "../config/nodemailer.js";
 import { NODE_ENV, SECURITY_SECRET, SENDER_EMAIL } from "../setup/config/env.js";
+import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE } from "../config/emailTemplates.js";
 
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -126,7 +127,8 @@ export const sendVerifyOtp = async(req, res) =>{
       from: SENDER_EMAIL,
       to: user.email,
       subject: 'Account verification OTP',
-      text: `Your otp is ${otp}. Verify your account using this otp.`
+      // text: `Your otp is ${otp}. Verify your account using this otp.`
+      html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
     }
 
     await transporter.sendMail(mailOption);
@@ -207,7 +209,8 @@ export const sendResetOtp = async (req, res) => {
       from: SENDER_EMAIL,
       to: user.email,
       subject: 'Password Reset OTP',
-      text: `Your OTP for resetting your password is ${otp}. Use this OTP to reset your password`
+      // text: `Your OTP for resetting your password is ${otp}. Use this OTP to reset your password`
+      html: PASSWORD_RESET_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
     }
 
     await transporter.sendMail(mailOptions);
