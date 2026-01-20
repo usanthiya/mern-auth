@@ -21,9 +21,9 @@ const Header = () => {
         Let's start with a quick product tour and we will have you up and
         running in no time!
       </p>
-      <button className="flex gap-2 items-center rounded-full border border-gray-500 px-6 py-3 hover:bg-gray-100 transition-all">
+      {/* <button className="flex gap-2 items-center rounded-full border border-gray-500 px-6 py-3 hover:bg-gray-100 transition-all">
         Get Started
-    </button>
+      </button> */}
     </div>
   );
 };
